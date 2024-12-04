@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Gaming Store - Products</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1 class="logo-text">Quest Gaming Store</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="signin.html" id="sign-link">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-bar">
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="Search for products..." name="search" />
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <!-- Products Section -->
+    <main>
+        <section class="our-products-title">
+            <h2>Our Products</h2>
+        </section>
+        <section id="product-container" class="product-grid">
+            <!-- Products will be dynamically added here -->
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Quest Gaming Store. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/product.js"></script>
+</body>
+</html>

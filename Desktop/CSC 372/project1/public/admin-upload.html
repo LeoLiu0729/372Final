@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Bulk Upload</title>
+  <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+  <header>
+    <h1>Admin - Bulk Upload</h1>
+    <nav>
+      <a href="admin-upload.html">Bulk Upload</a>
+      <a href="admin-products.html">Product Listing</a>
+      <a href="signin.html">Sign Out</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Bulk Upload Products</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+      <input type="file" id="file-upload" accept=".json" required />
+      <button type="submit">Upload</button>
+    </form>
+  </main>
+
+  <script src="scripts/admin-upload.js"></script>
+</body>
+</html>
