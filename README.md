@@ -19,8 +19,8 @@ This is a full-stack e-commerce application for managing and purchasing gaming p
 ## Installation and Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/LeoLiu0729/quest-gaming-store.git
-   cd quest-gaming-store
+   git clone https://github.com/LeoLiu0729/372Final.git
+   cd 372Final
 
 
 Install dependencies:
