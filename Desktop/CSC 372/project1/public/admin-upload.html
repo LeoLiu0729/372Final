@@ -10,20 +10,48 @@
   <header>
     <h1>Admin - Bulk Upload</h1>
     <nav>
-      <a href="admin-upload.html">Bulk Upload</a>
       <a href="admin-products.html">Product Listing</a>
       <a href="signin.html">Sign Out</a>
     </nav>
   </header>
 
   <main>
-    <h2>Bulk Upload Products</h2>
-    <form id="upload-form" enctype="multipart/form-data">
-      <input type="file" id="file-upload" accept=".json" required />
+    <form id="bulk-upload-form" enctype="multipart/form-data">
+      <input type="file" id="file" name="file" accept=".json" required />
       <button type="submit">Upload</button>
     </form>
+    <p id="upload-message"></p>
   </main>
 
-  <script src="scripts/admin-upload.js"></script>
+ 
+  <script>
+    document.getElementById('bulk-upload-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('file', document.getElementById('file').files[0]);
+
+      try {
+        const response = await fetch('/api/admin/bulk-upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+        const messageEl = document.getElementById('upload-message');
+
+        if (response.ok) {
+          messageEl.textContent = result.message;
+          messageEl.style.color = 'green';
+        } else {
+          messageEl.textContent = result.error || 'Bulk upload failed.';
+          messageEl.style.color = 'red';
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        alert('An error occurred. Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>

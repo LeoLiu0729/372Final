@@ -10,7 +10,6 @@ exports.getAllProducts = () => {
         throw error;
     }
 };
-
 exports.addProduct = ({ name, description, image_url, price, category_id }) => {
     const stmt = db.prepare(
       'INSERT INTO Products (name, description, image_url, price, category_id) VALUES (?, ?, ?, ?, ?)'
@@ -37,4 +36,26 @@ exports.addProduct = ({ name, description, image_url, price, category_id }) => {
         DELETE FROM Products WHERE id = ?;
     `;
     return db.prepare(deleteProductQuery).run(productId);
+};
+exports.getProductById = (productId) => {
+  const query = 'SELECT * FROM Products WHERE id = ?';
+  const stmt = db.prepare(query);
+
+  const product = stmt.get(productId); // Fetch the product
+  console.log(`Fetched product for ID ${productId}:`, product); // Debug log
+  return product;
+};
+exports.getProductsByCategory = (categoryId) => {
+  const query = `
+      SELECT 
+          p.id, p.name, p.description, p.image_url, p.price, p.category_id, c.name AS category_name
+      FROM Products p
+      JOIN Categories c ON p.category_id = c.id
+      WHERE p.category_id = ?;
+  `;
+
+  const stmt = db.prepare(query);
+  const products = stmt.all(categoryId);
+  console.log(`Fetched products for category ID ${categoryId}:`, products); // Debug log
+  return products;
 };

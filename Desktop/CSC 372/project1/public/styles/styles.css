@@ -514,4 +514,73 @@ footer p {
     background-color: #007acc;
     box-shadow: 0 0 10px rgba(0, 179, 255, 0.5);
 }
+/* Style for the game grid container */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
 
+/* Style for individual game cards */
+.game-card {
+    background-color: #007bff; 
+    border: 1px solid #0056b3
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    color: white; /* White text for contrast */
+}
+
+/* Game card hover effect */
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Game image */
+.game-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 2px solid #0056b3; /* Darker blue line under the image */
+}
+
+/* Game title */
+.game-card h3 {
+    font-size: 1.2rem;
+    margin: 10px;
+    color: white; /* Ensure the title remains visible */
+    text-align: center;
+}
+
+/* Game rating and summary */
+.game-card p {
+    font-size: 0.9rem;
+    color: #dceeff; /* Light blue for subtle contrast */
+    margin: 10px;
+    line-height: 1.4;
+}
+
+/* Add spacing between elements */
+.game-card p:last-of-type {
+    margin-bottom: 15px;
+}
+
+/* Optional: Add button for more details */
+.game-card .details-btn {
+    display: block;
+    background-color: #0056b3; /* Dark blue button */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.game-card .details-btn:hover {
+    background-color: #003f7f; /* Even darker blue on hover */
+}

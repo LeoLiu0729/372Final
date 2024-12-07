@@ -17,11 +17,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
+// Bulk upload products from JSON
+router.post('/bulk-upload', upload.single('file'), adminController.bulkUpload);
 
 // Routes for product management
 router.get('/products', adminController.getAllProducts); // Fetch all products
 router.post('/products', upload.single('image'), adminController.addProduct); // Add a product
-router.put('/products/:id', upload.single('image'), adminController.updateProduct); // Update a product
+router.put('/products/:id', upload.single('image'), adminController.updateProduct);
 router.delete('/products/:id', adminController.deleteProduct); // Delete a product
 
 module.exports = router;

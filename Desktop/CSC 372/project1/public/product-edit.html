@@ -21,7 +21,8 @@
     <form id="edit-product-form">
       <input type="text" id="name" placeholder="Name" required />
       <textarea id="description" placeholder="Description"></textarea>
-      <input type="text" id="image_url" placeholder="image" required />
+      <input type="file" id="image" accept="image/*" />
+      <input type="hidden" id="image_url" />
       <input type="number" id="price" placeholder="Price" required />
       <input type="number" id="category_id" placeholder="Category ID" required />
       <button type="submit">Save Product</button>

@@ -58,19 +58,35 @@ exports.getCartByUserId = (userId) => {
 
 
 
-exports.updateCartProduct = (productId, quantity) => {
-    const query = `
-        UPDATE CartProducts
-        SET quantity = ?
-        WHERE id = ?;
-    `;
-    return db.prepare(query).run(quantity, productId);
+exports.updateCartProduct = (cartProductId, quantity) => {
+    const sql = `UPDATE CartProducts SET quantity = ? WHERE id = ?`;
+    db.prepare(sql).run(quantity, cartProductId);
 };
 
-exports.removeCartProduct = (productId) => {
+
+exports.removeCartProduct = (cartProductId) => {
+    const sql = `DELETE FROM CartProducts WHERE id = ?`;
+    db.prepare(sql).run(cartProductId);
+};
+exports.checkout = (userId) => {
+    const sql = `UPDATE Carts SET status = 'purchased' WHERE user_id = ? AND status = 'new'`;
+    db.prepare(sql).run(userId);
+};
+exports.addProduct = (product) => {
+    const { name, description, image_url, price, category_id } = product;
     const query = `
-        DELETE FROM CartProducts
-        WHERE id = ?;
+      INSERT INTO Products (name, description, image_url, price, category_id)
+      VALUES (?, ?, ?, ?, ?)
     `;
-    return db.prepare(query).run(productId);
+    db.prepare(query).run(name, description, image_url, price, category_id);
+  };
+
+exports.clearCart = (userId) => {
+  const query = `
+    DELETE FROM CartProducts
+    WHERE cart_id IN (
+      SELECT id FROM Carts WHERE user_id = ? AND status = 'new'
+    )
+  `;
+  db.prepare(query).run(userId);
 };

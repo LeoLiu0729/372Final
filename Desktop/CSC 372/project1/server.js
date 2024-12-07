@@ -4,8 +4,7 @@ const productRoutes = require('./backend/routes/productRoutes');
 const adminRoutes = require('./backend/routes/adminRoutes');
 const cartRoutes = require('./backend/routes/cartRoutes');
 const userRoutes = require('./backend/routes/userRoutes');
-
-
+const apiRoutes = require('./backend/routes/apiRoutes'); // Update with your file path
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +15,8 @@ app.use((req, res, next) => {
     next();
 });
 
+// API routes
+app.use('/api', apiRoutes);
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 

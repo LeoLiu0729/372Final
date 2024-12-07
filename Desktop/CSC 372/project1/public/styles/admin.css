@@ -50,7 +50,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #00b3ff;
+    color: #ffa600;
 }
 
 /* Section and Form Styling */
@@ -66,7 +66,7 @@ section {
 section h2 {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: #333;
+    color: #333333;
     border-bottom: 2px solid #00b3ff;
     padding-bottom: 10px;
 }

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="logo">
             <h1>Quest Gaming Store</h1>
@@ -23,53 +22,67 @@
         </nav>
     </header>
 
-    <!-- Product Details Section -->
     <section class="product-details">
-        <h2>GeForce RTX 4090</h2>
-        <img src="images/rtx4090.jpg" alt="GeForce RTX 4090" class="product-image">
-        <p><strong>Price:</strong> $1499.99</p>
-        <p><strong>Description:</strong> The GeForce RTX 4090 delivers extreme performance for gamers and creators.</p>
-        <ul>
-            <li>Memory: 24GB GDDR6X</li>
-            <li>Boost Clock: 2.52 GHz</li>
-            <li>Power Consumption: 450W</li>
-            <li>Ray Tracing: Yes</li>
-        </ul>
+        <div id="product-details-container">
+            <!-- Product details will be loaded here -->
+        </div>
     </section>
 
-    <hr>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const productDetailsContainer = document.getElementById('product-details-container');
 
-    <section class="product-details">
-        <h2>Gaming Keyboard</h2>
-        <img src="images/gprokeyboard.png" alt="Gaming Keyboard" class="product-image">
-        <p><strong>Price:</strong> $99.99</p>
-        <p><strong>Description:</strong> A mechanical gaming keyboard with RGB lighting and customizable keys for a great gaming experience.</p>
-        <ul>
-            <li>Switch Type: Mechanical</li>
-            <li>RGB Lighting: Yes</li>
-            <li>Connection: USB Wired</li>
-            <li>Key Life: 50 million keystrokes</li>
-        </ul>
-    </section>
+            if (!productId) {
+                productDetailsContainer.innerHTML = `<p>Product not found.</p>`;
+                return;
+            }
 
-    <hr>
+            try {
+                const response = await fetch(`/api/products/${productId}`);
+                if (!response.ok) throw new Error('Failed to fetch product details.');
 
-    <section class="product-details">
-        <h2>Gaming Mouse</h2>
-        <img src="images/gpromouse.png" alt="Gaming Mouse" class="product-image">
-        <p><strong>Price:</strong> $59.99</p>
-        <p><strong>Description:</strong> A lightweight gaming mouse with high precision and customizable buttons for a competitive edge.</p>
-        <ul>
-            <li>DPI: 800,1600,3200,6400</li>
-            <li>Weight: 85g</li>
-            <li>Customizable Buttons: 6</li>
-            <li>Connection: USB Wired</li>
-        </ul>
-    </section>
+                const product = await response.json();
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 Quest Gaming Store. All rights reserved.</p>
-    </footer>
+                productDetailsContainer.innerHTML = `
+                    <h2>${product.name}</h2>
+                    <img src="${product.image_url}" alt="${product.name}" />
+                    <p><strong>Description:</strong> ${product.description}</p>
+                    <p><strong>Price:</strong> $${product.price.toFixed(2)}</p>
+                    <p><strong>Category:</strong> ${product.category_name}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+                productDetailsContainer.innerHTML = `<p>Error loading product details.</p>`;
+            }
+        });
+
+        // Add to Cart function
+        async function addToCart(productId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert('Please sign in to add products to your cart.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/cart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: user.id, productId }),
+                });
+
+                if (response.ok) {
+                    alert('Product added to cart!');
+                } else {
+                    alert('Failed to add product to cart.');
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+            }
+        }
+    </script>
 </body>
 </html>

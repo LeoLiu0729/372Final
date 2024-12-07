@@ -47,34 +47,47 @@ exports.getCart = (req, res) => {
     res.status(500).json({ error: 'Failed to fetch cart' });
   }
 };
-
 exports.updateCartProduct = async (req, res) => {
-    const { productId } = req.params;
+    const { cartProductId } = req.params;
     const { quantity } = req.body;
 
-    if (!quantity || quantity < 1) {
-        return res.status(400).json({ error: 'Invalid quantity.' });
-    }
-
     try {
-        await cartModel.updateCartProduct(productId, quantity);
-        res.status(200).json({ message: 'Cart product updated successfully.' });
+        await cartModel.updateCartProduct(cartProductId, quantity);
+        res.status(200).json({ message: 'Quantity updated successfully.' });
     } catch (error) {
         console.error('Error updating cart product:', error);
-        res.status(500).json({ error: 'Failed to update cart product.' });
+        res.status(500).json({ error: 'Failed to update quantity.' });
     }
 };
 
 
 exports.removeCartProduct = async (req, res) => {
-    const { productId } = req.params;
+    const { cartProductId } = req.params;
 
     try {
-        await cartModel.removeCartProduct(productId);
-        res.status(200).json({ message: 'Product removed from cart successfully.' });
+        await cartModel.removeCartProduct(cartProductId);
+        res.status(200).json({ message: 'Product removed from cart.' });
     } catch (error) {
         console.error('Error removing product from cart:', error);
-        res.status(500).json({ error: 'Failed to remove product from cart.' });
+        res.status(500).json({ error: 'Failed to remove product.' });
     }
 };
-
+exports.checkout = async (req, res) => {
+    try {
+      const { userId } = req.body;
+  
+      if (!userId) {
+        return res.status(400).json({ error: 'User ID is required for checkout.' });
+      }
+  
+      console.log(`Checkout for User ID: ${userId}`);
+  
+      // Clear the cart for the user
+      await cartModel.clearCart(userId);
+  
+      res.json({ message: 'Checkout completed successfully. Cart is now empty.' });
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      res.status(500).json({ error: 'Failed to complete checkout.' });
+    }
+  };
